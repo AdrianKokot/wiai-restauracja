@@ -1,0 +1,118 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <nav class="page-nav">
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul>
+            <li><a href="#co">Kontakt</a></li>
+            <li><a href="#me">Menu</a></li>
+            <li><a href="#bo">Rezerwacja</a></li>
+            <li><a href="#ga">Galeria</a></li>
+            <li><a href="#ab">O nas</a></li>
+        </ul>
+        <hr>
+    </nav>
+    <header class="page-header" id="co">
+        <nav class="header-nav">
+            <ul>
+                <li>
+                    <i class="fas fa-phone"></i>
+                    <span>
+                        <%= webData.phone %></span>
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    <span>
+                        <%= webData.mail %></span>
+                </li>
+                <li>
+                    <i class="fas fa-home"></i>
+                    <span>
+                        <%= webData.address %></span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section class="menu" id="me">
+        <h1>Karta dań</h1>
+        <nav class="menu-nav">
+            <ul>
+                <li data-category="" class="active">Wszystko</li>
+                <li data-category="snack">Przystawki</li>
+                <li data-category="salad">Sałatki</li>
+                <li data-category="soup">Zupy</li>
+                <li data-category="meat">Dania mięsne</li>
+                <li data-category="dessert">Desery</li>
+            </ul>
+        </nav>
+        <article class="dishes">
+            <ul>
+            </ul>
+        </article>
+    </section>
+    <section class="booking" id="bo">
+        <h1>Rezerwacje i uroczystości</h1>
+        <span class="<%= webData.bookingClass %>">
+            <img src="<%= webData.bookingSrc %>" alt="<%= webData.bookingAlt %>">
+        </span>
+        <p>
+            <%= webData.bookingContent %>
+        </p>
+        <form action="mailto:kokot.adrian.zsk@gmail.com" method="post" enctype="text/plain" class="form">
+            <input type="text" name="firstName" placeholder="Imię">
+            <input type="text" name="lastName" placeholder="Nazwisko">
+            <input type="email" name="email" placeholder="e-mail" required>
+            <textarea name="message" id="message" rows="10" placeholder="Treść wiadomości" required></textarea>
+            <button id="submit">Wyślij wiadomość</button>
+        </form>
+    </section>
+    <section class="gallery" id="ga">
+        <h1>Nasze zdjęcia</h1>
+        <div class="images">
+            <% images.forEach((img)=>{ %>
+            <span class="<%= img.class %>">
+                <img src="<%= img.src %>" alt="<%= img.alt %>">
+            </span>
+            <% }) %>
+        </div>
+    </section>
+    <section class="about" id="ab">
+        <h1>O nas</h1>
+        <p>
+            <%= webData.about %>
+        </p>
+    </section>
+    <footer class="page-footer">
+        <div class="footer-content">
+            <a href="#ab"><i class="fab fa-facebook-f"></i></a>
+            <div class="footer-hours">
+                Godziny otwarcia
+                <ul>
+                    <li><span>
+                            <%= webData.day1 %></span>
+                        <%= webData.hours1 %>
+                    </li>
+                    <li><span>
+                            <%= webData.day2 %></span>
+                        <%= webData.hours2 %>
+                    </li>
+                </ul>
+            </div>
+            <a href="#ab"><i class="fab fa-instagram"></i></a>
+        </div>
+        <aside class="copy">
+            &copy; Adrian Kokot
+            <div>
+                Favicon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a>
+                from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+            </div>
+        </aside>
+    </footer>
+    <script src="js/main.js"></script>
+    <% include ../partials/footer %>

@@ -1,0 +1,118 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+    <nav class="page-nav">
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul>
+            <li><a href="#co">Kontakt</a></li>
+            <li><a href="#me">Menu</a></li>
+            <li><a href="#bo">Rezerwacja</a></li>
+            <li><a href="#ga">Galeria</a></li>
+            <li><a href="#ab">O nas</a></li>
+            <li><a href="#ho">Stopka</a></li>
+        </ul>
+    </nav>
+    <section class="contact" id="co">
+        <h1>Kontakt</h1>
+        <form action="/webData" method="POST">
+            <label for="phone">Numer telefonu:</label>
+            <input type="number" name="webData[phone]" id="phone" value="<%= webData.phone %>">
+            <label for="mail">E-mail:</label>
+            <input type="email" name="webData[mail]" id="mail" value="<%= webData.mail %>">
+            <label for="address">Adres restauracji:</label>
+            <input type="text" name="webData[address]" id="address" value="<%= webData.address %>">
+            <button class="submit">Zapisz zmiany</button>
+        </form>
+    </section>
+    <section class="menu" id="me">
+        <h1>Karta dań</h1>
+        <article class="dishes">
+            <ul>
+                <% dishes.forEach((dish)=>{ %>
+                <li data-id="<%= dish.id %>">
+                    <%= dish.name %>
+                    <span>
+                        <%= dish.price %></span>
+                </li>
+                <% }); %>
+            </ul>
+            <form action="/dishes" method="POST">
+                <label for="dishName">Nazwa dania:</label>
+                <input type="text" name="dish[name]" id="dishName" placeholder="Barszcz">
+                <label for="dishPrice">Cena dania:</label>
+                <input type="number" name="dish[price]" id="dishPrice" placeholder="1">
+                <label for="dishCategory">Kategoria:</label>
+                <select name="dish[category]" id="dishCategory">
+                    <option value="snack">Przystawka</option>
+                    <option value="salad">Sałatka</option>
+                    <option value="soup">Zupa</option>
+                    <option value="meat">Danie mięsne</option>
+                    <option value="dessert">Deser</option>
+                </select>
+                <button class="submit">Dodaj danie</button>
+            </form>
+        </article>
+    </section>
+    <section class="booking" id="bo">
+        <h1>Rezerwacje i uroczystości</h1>
+        <span class="<%= webData.bookingClass %>">
+            <img src="<%= webData.bookingSrc %>" alt="<%= webData.bookingAlt %>">
+        </span>
+        <form action="/webData" method="POST">
+            <label for="bookingSrc">Źródło zdjęcia:</label>
+            <input type="text" name="webData[bookingSrc]" id="bookingSrc" value="<%= webData.bookingSrc %>">
+            <label for="bookingAlt">Opis zdjęcia:</label>
+            <input type="text" name="webData[bookingAlt]" id="bookingAlt" value="<%= webData.bookingAlt %>">
+            <label for="bookingContent">Treść pod zdjęciem:</label>
+            <textarea name="webData[bookingContent]" id="bookingContent" cols="70" rows="5"><%= webData.bookingContent %></textarea>
+            <button class="submit">Zapisz zmiany</button>
+        </form>
+    </section>
+    <section class="gallery" id="ga">
+        <h1>Nasze zdjęcia</h1>
+        <div class="images">
+            <% images.forEach((img)=>{ %>
+            <span class="<%= img.class %>">
+                <img src="<%= img.src %>" alt="<%= img.alt %>">
+            </span>
+            <% }) %>
+        </div>
+        <form action="/pictures" method="POST">
+            <label for="pictureSrc">Źródło zdjęcia:</label>
+            <input type="url" name="pictures[src]" id="pictureSrc">
+            <label for="pictureAlt">Opis zdjęcia:</label>
+            <input type="text" name="pictures[alt]" id="pictureAlt" value="">
+            <label for="pictureClass">Wielkość zdjęcia:</label>
+            <select name="pictures[class]" id="pictureClass">
+                <option value="size-1">Połowa szerokości strony</option>
+                <option value="size-2">2/3 szerokości strony</option>
+                <option value="size-3">Cała szerokość strony</option>
+            </select>
+            <button class="submit">Dodaj zdjęcie</button>
+        </form>
+    </section>
+    <section class="about" id="ab">
+        <h1>O nas</h1>
+        <form action="/webData" method="POST">
+            <textarea name="about" id="about" cols="70" rows="7"><%= webData.about %></textarea>
+            <button class="submit">Zapisz zmiany</button>
+        </form>
+    </section>
+    <section id="ho">
+        <h1>Godziny otwarcia</h1>
+        <form action="/webData" method="POST" class="hours">
+            <input type="text" name="webData[day1]" id="day1" value="<%= webData.day1 %>">
+            <input type="text" name="webData[hours1]" id="hours1" value="<%= webData.hours1 %>">
+            <input type="text" name="webData[day2]" id="day2" value="<%= webData.day2 %>">
+            <input type="text" name="webData[hours2]" id="hours2" value="<%= webData.hours2 %>">
+            <button class="submit">Zapisz zmiany</button>
+        </form>
+    </section>
+    <script src="js/admin.js"></script>
+    <% include ../partials/footer %>

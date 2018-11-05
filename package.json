@@ -1,0 +1,29 @@
+{
+  "name": "wiai-restauracja",
+  "version": "1.0.0",
+  "description": "Strona restauracji",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "ejs-lint": "^0.3.0",
+    "express": "^4.16.4",
+    "express-sanitizer": "^1.0.4",
+    "mongoose": "^5.3.9",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdrianKokot/wiai-restauracja.git"
+  },
+  "author": "Adrian Kokot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdrianKokot/wiai-restauracja/issues"
+  },
+  "homepage": "https://github.com/AdrianKokot/wiai-restauracja#readme"
+}
