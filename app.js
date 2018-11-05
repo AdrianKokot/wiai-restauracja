@@ -1,6 +1,6 @@
 const express = require('express'),
     app = express(),
-    port = 3000,
+    port = process.env.PORT || 8080,
     mongoose = require('mongoose'),
     sanitizer = require("express-sanitizer")
 bodyParser = require("body-parser");
