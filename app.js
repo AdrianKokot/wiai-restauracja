@@ -5,7 +5,7 @@ const express = require('express'),
     sanitizer = require("express-sanitizer")
 bodyParser = require("body-parser");
 
-mongoose.connect('mongodb://localhost:27017/mydb');
+mongoose.connect('mongodb://adrian:database123@ds151523.mlab.com:51523/wiai-restauracja');
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
@@ -49,35 +49,35 @@ var dishesSchema = new mongoose.Schema({
 var Dishes = mongoose.model('dishesSchema', dishesSchema);
 
 images = [{
-            src: 'img/joseph-gonzalez-176749-unsplash-thumb.jpg',
-            alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-            class: 'size-1'
-        },
-        {
-            src: 'img/tomas-anton-escobar-502606-unsplash-thumb.jpg',
-            alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-            class: 'size-2'
-        },
-        {
-            src: 'img/pablo-merchan-montes-772142-unsplash-thumb.jpg',
-            alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-            class: 'size-2'
-        },
-        {
-            src: 'img/quentin-dr-178096-unsplash-thumb.jpg',
-            alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-            class: 'size-1'
-        }
-    ]
-    
+        src: 'img/joseph-gonzalez-176749-unsplash-thumb.jpg',
+        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
+        class: 'size-1'
+    },
+    {
+        src: 'img/tomas-anton-escobar-502606-unsplash-thumb.jpg',
+        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
+        class: 'size-2'
+    },
+    {
+        src: 'img/pablo-merchan-montes-772142-unsplash-thumb.jpg',
+        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
+        class: 'size-2'
+    },
+    {
+        src: 'img/quentin-dr-178096-unsplash-thumb.jpg',
+        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
+        class: 'size-1'
+    }
+]
+
 
 app.get('/admin', (req, res) => {
     WebData.find({}, function (err, foundData) {
         if (err) return console.error(err);
-        Pictures.find({}, function(err, foundPictures){
+        Pictures.find({}, function (err, foundPictures) {
             if (err) return console.error(err);
-            Dishes.find({}, function(err, foundDishes){
-                if(err) return console.log(err);
+            Dishes.find({}, function (err, foundDishes) {
+                if (err) return console.log(err);
                 res.render('pages/admin', {
                     webData: foundData[0],
                     images: foundPictures,
@@ -88,13 +88,15 @@ app.get('/admin', (req, res) => {
     });
 });
 
-app.get('/dishes/:category', (req, res)=> {
-    Dishes.find({category: req.params.category}).lean().exec(function (err, dish) {
+app.get('/dishes/:category', (req, res) => {
+    Dishes.find({
+        category: req.params.category
+    }).lean().exec(function (err, dish) {
         return res.end(JSON.stringify(dish));
     });
 });
 
-app.get('/dishes', (req, res)=> {
+app.get('/dishes', (req, res) => {
     Dishes.find().lean().exec(function (err, dish) {
         return res.end(JSON.stringify(dish));
     });
@@ -104,7 +106,7 @@ app.get('/dishes', (req, res)=> {
 app.get('/*', (req, res) => {
     WebData.find({}, function (err, foundData) {
         if (err) return console.error(err);
-        Pictures.find({}, function(err, foundPictures){
+        Pictures.find({}, function (err, foundPictures) {
             if (err) return console.error(err);
             res.render('pages/index', {
                 webData: foundData[0],

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/mydb');
+mongoose.connect('mongodb://adrian:database123@ds151523.mlab.com:51523/wiai-restauracja');
 
 const webSchema = new mongoose.Schema({
     phone: Number,
