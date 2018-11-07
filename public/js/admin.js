@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pageNav = document.querySelector('.page-nav'),
         anchors = document.querySelectorAll('a'),
         padding = 63,
-        dishesDel = document.querySelectorAll('.dishes ul li::before');
+        dishesDel = document.querySelectorAll('.dishes ul li');
 
     burger.addEventListener('click', () => {
         pageNav.classList.toggle('active');
@@ -24,8 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     dishesDel.forEach(dishDel => {
-        dishDel.addEventListener('click', () => {
-            let liEl = this.parentNode;
+        dishDel.addEventListener('click', (liEl) => {
             
             console.log('click');
             console.log(liEl.dataset.id);
