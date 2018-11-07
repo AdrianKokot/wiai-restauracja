@@ -23,10 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    dishesDel.addEventListener('click', () => {
-        let liEl = this.parentNode;
-        
-        console.log('click');
-        console.log(liEl.dataset.id);
-    })
+    dishesDel.forEach(dishDel => {
+        dishDel.addEventListener('click', () => {
+            let liEl = this.parentNode;
+            
+            console.log('click');
+            console.log(liEl.dataset.id);
+        });
+    });
 });
