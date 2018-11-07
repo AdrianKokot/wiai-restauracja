@@ -139,4 +139,8 @@ app.post('/dishes', (req, res) => {
     newDish.save().then(res.redirect("/admin"));
 });
 
+app.delete('/dishes', (req, res) => {
+    
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
