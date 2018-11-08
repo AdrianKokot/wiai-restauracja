@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
         formSubmit = form.querySelector('#submit'),
         dishesUl = document.querySelector('.dishes ul'),
         menuButtons = document.querySelectorAll('.menu-nav ul li'),
-        hostnameLocation = window.location.href;
+        hostnameLocation = window.location.href,
+        menuTop = document.querySelector('.menu');
 
     let windowLastWidth = 0,
         pageHeaderHeight = 0,
@@ -43,10 +44,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function loadDishes(category = "") {
-        dishesUl.innerHTML = "";
         fetch(`${hostnameLocation}dishes/${category}`)
             .then(res => res.json())
             .then(dishes => {
+                dishesUl.innerHTML = "";
                 dishes.forEach(dish => {
                     const liEl = document.createElement('li'),
                         spanEl = document.createElement('span');
@@ -70,6 +71,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 activeCategory = btn;
                 activeCategory.classList.add('active');
                 loadDishes(btn.dataset.category);
+                window.scrollTo({
+                    behavior: 'smooth',
+                    top: Math.ceil(document.getElementById('me').getBoundingClientRect().y + window.scrollY) - padding
+                });
+                
             });
         });
 
@@ -92,10 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // formSubmit.addEventListener('click', (ev) => {
-        //     ev.preventDefault();
-
-        // });
+        formSubmit.addEventListener('click', (ev) => {
+            ev.preventDefault();
+        });
     }
 
     init();

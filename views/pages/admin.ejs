@@ -36,10 +36,9 @@
             <ul>
                 <% dishes.forEach((dish)=>{ %>
                 <li data-id="<%= dish.id %>">
-                    <%= dish.name %>
-                    <span>
-                        <%= dish.price %>
-                    </span>
+                    <span class="del">X</span>
+                    <span class="name"><%= dish.name %></span>
+                    <span class="price"><%= dish.price %></span>
                 </li>
                 <% }); %>
             </ul>

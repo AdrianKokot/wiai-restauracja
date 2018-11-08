@@ -188,32 +188,33 @@ textarea {
     border-bottom: 1px solid var(--textDefaultColor);
 }
 
-.menu .dishes ul li:hover::before {
-    color: red;
-}
-
-.menu .dishes ul li::before {
-    position: absolute;
-    content: 'X';
-    color: transparent; 
-    top: 50%;
-    left: 0;
-    transform: translate(70%, -50%);
-    cursor: pointer;
-    transition: .3s;
-}
-
 .menu .dishes ul li:last-of-type {
     border-bottom: none;
 }
 
-.menu .dishes ul li span {
+.menu .dishes ul li span.del {
+    color: transparent;
+    flex-shrink: 0;
+    margin-right: 2rem;
+    transition: .2s;
+}
+
+.menu .dishes ul li:hover span.del {
+    color: red;
+}
+
+.menu .dishes ul li span.name {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.menu .dishes ul li span.price {
     flex-shrink: 0;
     margin-left: 2rem;
     color: var(--accentColor);
 }
 
-.menu .dishes ul li span::after {
+.menu .dishes ul li span.price::after {
     content: ' pln';
 }
 
