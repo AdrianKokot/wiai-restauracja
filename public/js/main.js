@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formSubmit = form.querySelector('#submit'),
         dishesUl = document.querySelector('.dishes ul'),
         menuButtons = document.querySelectorAll('.menu-nav ul li'),
-        hostnameLocation = window.location.href,
-        menuTop = document.querySelector('.menu');
+        hostnameLocation = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 
     let windowLastWidth = 0,
         pageHeaderHeight = 0,
@@ -44,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function loadDishes(category = "") {
-        fetch(`${hostnameLocation}dishes/${category}`)
+        fetch(`${hostnameLocation}/dishes/${category}`)
             .then(res => res.json())
             .then(dishes => {
                 dishesUl.innerHTML = "";

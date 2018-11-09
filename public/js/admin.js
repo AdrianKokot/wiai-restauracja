@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
         pageNav = document.querySelector('.page-nav'),
         anchors = document.querySelectorAll('a'),
         padding = 63,
-        dishesDel = document.querySelectorAll('.dishes ul li');
+        dishesDel = document.querySelectorAll('.dishes ul li span.del'),
+        hostnameLocation = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 
     burger.addEventListener('click', () => {
         pageNav.classList.toggle('active');
@@ -24,10 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     dishesDel.forEach(dishDel => {
-        dishDel.addEventListener('click', (liEl) => {
-            
-            console.log('click');
-            console.log(liEl.dataset.id);
+        dishDel.addEventListener('click', () => {
+            fetch(`${hostnameLocation}/dishes/${dishDel.parentElement.dataset.id}`, {
+                method: 'delete'
+            }).then(dishDel.parentElement.remove());
         });
     });
 });
