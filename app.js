@@ -5,8 +5,8 @@ const express = require('express'),
     sanitizer = require("express-sanitizer")
 bodyParser = require("body-parser");
 
-mongoose.connect('mongodb://adrian:database123@ds151523.mlab.com:51523/wiai-restauracja');
-// mongoose.connect("mongodb://localhost:27017/mydb");
+// mongoose.connect('mongodb://adrian:database123@ds151523.mlab.com:51523/wiai-restauracja');
+mongoose.connect("mongodb://localhost:27017/mydb");
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
