@@ -2,77 +2,54 @@ const express = require('express'),
     app = express(),
     port = process.env.PORT || 8080,
     mongoose = require('mongoose'),
-    sanitizer = require("express-sanitizer")
-bodyParser = require("body-parser");
+    sanitizer = require("express-sanitizer"),
+    bodyParser = require("body-parser"),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local'),
+    User = require('./models/user'),
+    WebData = require('./models/webSchema'),
+    Pictures = require('./models/Pictures'),
+    Dishes = require('./models/Dishes');
 
 mongoose.connect('mongodb://adrian:database123@ds151523.mlab.com:51523/wiai-restauracja');
 // mongoose.connect("mongodb://localhost:27017/mydb");
 
-app.use(express.static('public'));
 app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({
-    extended: true
+app.use(require('express-session')({
+    secret: "okraglinek",
+    resave: false,
+    saveUninitialized: false
 }));
+app.use(express.static('public'));
 app.use(sanitizer());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-var webSchema = new mongoose.Schema({
-    phone: Number,
-    mail: String,
-    address: String,
-    bookingContent: String,
-    bookingClass: String,
-    bookingAlt: String,
-    bookingSrc: String,
-    day1: String,
-    hours1: String,
-    day2: String,
-    hours2: String,
-    about: String
-});
-
-var WebData = mongoose.model('WebSchema', webSchema);
-
-var picturesSchema = new mongoose.Schema({
-    src: String,
-    alt: String,
-    class: String
-});
-
-var Pictures = mongoose.model('picturesSchema', picturesSchema);
-
-var dishesSchema = new mongoose.Schema({
-    name: String,
-    price: Number,
-    category: String
-});
-
-var Dishes = mongoose.model('dishesSchema', dishesSchema);
-
-images = [{
-        src: 'img/joseph-gonzalez-176749-unsplash-thumb.jpg',
-        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-        class: 'size-1'
-    },
-    {
-        src: 'img/tomas-anton-escobar-502606-unsplash-thumb.jpg',
-        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-        class: 'size-2'
-    },
-    {
-        src: 'img/pablo-merchan-montes-772142-unsplash-thumb.jpg',
-        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-        class: 'size-2'
-    },
-    {
-        src: 'img/quentin-dr-178096-unsplash-thumb.jpg',
-        alt: 'Suspendisse arcu diam, porta a tortor sit amet, sollicitudin consequat nisl.',
-        class: 'size-1'
+const isLoggedIn = (req,res,next) => {
+    if(req.isAuthenticated()){
+        return next();
     }
-]
+    res.redirect('/login');
+}
+app.get('/login', (req, res) => {
+    res.render('pages/login');
+});
 
+app.post('/login',passport.authenticate("local", {
+    successRedirect: '/admin',
+    failureRedirect: '/login'
+}));
 
-app.get('/admin', (req, res) => {
+app.get('/logout', (req,res) => {
+    req.logout();
+    res.redirect('/');
+});
+
+app.get('/admin', isLoggedIn, (req, res) => {
     WebData.find({}, function (err, foundData) {
         if (err) return console.error(err);
         Pictures.find({}, function (err, foundPictures) {
@@ -103,7 +80,6 @@ app.get('/dishes', (req, res) => {
     });
 });
 
-
 app.get('/*', (req, res) => {
     WebData.find({}, function (err, foundData) {
         if (err) return console.error(err);
@@ -117,33 +93,31 @@ app.get('/*', (req, res) => {
     });
 });
 
-app.post('/webData', (req, res) => {
+app.post('/webData', isLoggedIn, (req, res) => {
     req.body.webData.body = req.sanitize(req.body.webData.body);
     WebData.findOneAndUpdate({}, req.body.webData, function (err) {
         if (err) {
-            console.log(err);
+            console.error(err);
         } else {
             res.redirect("/admin");
         }
     });
 });
 
-app.post('/pictures', (req, res) => {
+app.post('/pictures', isLoggedIn, (req, res) => {
     req.body.pictures.body = req.sanitize(req.body.pictures.body);
-    var newImg = new Pictures(req.body.pictures);
+    const newImg = new Pictures(req.body.pictures);
     newImg.save().then(res.redirect("/admin"));
 });
 
-app.post('/dishes', (req, res) => {
+app.post('/dishes', isLoggedIn, (req, res) => {
     req.body.dish.body = req.sanitize(req.body.dish.body);
-    var newDish = new Dishes(req.body.dish);
+    const newDish = new Dishes(req.body.dish);
     newDish.save().then(res.redirect("/admin"));
 });
 
-app.delete('/dishes/:id', (req, res) => {
-    Dishes.findOneAndDelete({_id: req.params.id}, ()=>{
-
-    });
+app.delete('/dishes/:id', isLoggedIn, (req, res) => {
+    Dishes.findOneAndDelete({_id: req.params.id}, ()=>{});
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));

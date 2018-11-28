@@ -404,6 +404,14 @@ textarea {
     margin: .5rem;
 }
 
+.page-footer .copy .admin {
+    padding: .3rem 0;
+    transition: .2s;
+}
+
+.page-footer .copy .admin:hover {
+    color: var(--backgroundDefaultColor);
+}
 @media only screen and (orientation: landscape) {
     .page-header {
         background-position: center calc(100vh - 800px);

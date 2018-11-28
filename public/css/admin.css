@@ -83,6 +83,10 @@ textarea {
     box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.8);
 }
 
+.page-nav ul li:last-child {
+    color: var(--copyrightColor);
+}
+
 @media only screen and (max-width: 999px) {
     .page-nav {
         height: var(--pageNavHeight);
@@ -161,6 +165,16 @@ textarea {
         margin: .7rem;
     }
 
+    .page-nav ul li:last-child {
+        transition: .3s .8s color linear;
+        color: transparent;
+    }
+
+    .page-nav.active ul li:last-child { 
+        color: var(--copyrightColor);
+        transition-delay: 0;
+    }
+
     .page-nav ul li a {
         display: block;
     }
@@ -220,7 +234,6 @@ textarea {
     width: calc(100% - 1rem);
     height: 200px;
     overflow: hidden;
-    /* margin: auto; */
 }
 
 .booking .size-3 img {
@@ -392,7 +405,7 @@ select {
     }
 
     .page-nav ul li {
-        flex-basis: 20%;
+        flex-grow: 1;
         color: var(--backgroundDefaultColor);
         padding: .4rem 1.8rem;
         text-align: center;

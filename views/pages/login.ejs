@@ -1,0 +1,14 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <main>
+        <form action="/login" method="POST">
+            <label for="login">Nazwa użytkownika:</label>
+            <input required="required" type="text" id="login" name="username">
+            <label for="pswd">Hasło:</label>
+            <input required="required" type="password" id="pswd" name="password">
+            <button id="submit">Zaloguj</button>
+        </form>
+    </main>
+<% include ../partials/footer %>

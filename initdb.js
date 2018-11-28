@@ -1,38 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+    User = require('./models/user'),
+    WebData = require('./models/webSchema'),
+    Pictures = require('./models/Pictures'),
+    Dishes = require('./models/Dishes');
+
 mongoose.connect('mongodb://adrian:database123@ds151523.mlab.com:51523/wiai-restauracja');
 // mongoose.connect("mongodb://localhost:27017/mydb");
-const webSchema = new mongoose.Schema({
-    phone: Number,
-    mail: String,
-    address: String,
-    bookingContent: String,
-    bookingClass: String,
-    bookingAlt: String,
-    bookingSrc: String,
-    day1: String,
-    hours1: String,
-    day2: String,
-    hours2: String,
-    about: String
-});
-
-const WebData = mongoose.model('WebSchema', webSchema);
-
-const picturesSchema = new mongoose.Schema({
-    src: String,
-    alt: String,
-    class: String
-});
-
-const Pictures = mongoose.model('picturesSchema', picturesSchema);
-
-const dishesSchema = new mongoose.Schema({
-    name: String,
-    price: Number,
-    category: String
-});
-
-const Dishes = mongoose.model('dishesSchema', dishesSchema);
 
 const images = [{
             src: 'img/joseph-gonzalez-176749-unsplash-thumb.jpg',
@@ -217,5 +190,14 @@ Dishes.remove({}, () => {
         dishObj.save().then(() => {
             console.log('Dodano danie');
         });
+    });
+});
+
+User.remove({}, ()=>{
+    console.log('Admin usuniety');
+    User.register(new User({username: "wiaiAdmin"}), "restauracja", (err,user)=>{
+        if(err) console.error(err);
+        else
+            console.log("utworzono");
     });
 });
