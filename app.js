@@ -40,8 +40,11 @@ const isLoggedIn = (req,res,next) => {
 }
 
 app.get('/login', (req, res) => {
-    // console.log(req.flash('message'));
-    res.render('pages/login', {message: req.flash('message')});
+    if(req.isAuthenticated()){
+        res.redirect('/admin');
+    } else {
+        res.render('pages/login', {message: req.flash('message')});
+    }  
 });
 
 app.post('/login',passport.authenticate("local", {
