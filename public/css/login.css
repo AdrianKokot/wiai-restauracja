@@ -84,3 +84,13 @@ input,
     color: var(--formSubmitActiveColor);
     border-color: var(--formSubmitActiveColor);
 }
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: var(--backgroundDefaultColor);
+    }
+    main {
+        width: 100%;
+        box-shadow: none;
+    }
+}
