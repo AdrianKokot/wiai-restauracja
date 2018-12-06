@@ -21,15 +21,26 @@ body {
     font-family: 'Open Sans', sans-serif;
     color: var(--textDefaultColor);
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 4rem);
+    overflow: hidden;
 }
 
+header {
+    height: 2rem;
+    line-height: 2rem;
+    margin-bottom: .55rem;
+    padding: .5rem;
+    text-align: center;
+    color: rgb(231, 69, 69);
+    text-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
 main {
     background-color: var(--backgroundDefaultColor);
     width: 27rem;
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -80%);
     padding: 1rem;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
@@ -73,23 +84,3 @@ input,
     color: var(--formSubmitActiveColor);
     border-color: var(--formSubmitActiveColor);
 }
-
-/* #submit::before {
-    transition: 0.5s all ease;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    right: 50%;
-    bottom: 0;
-    opacity: 0;
-    content: '';
-    background-color: var(--formSubmitActiveColor);
-}
-
-#submit:hover::before,
-#submit:focus::before {
-    transition: 0.5s all ease;
-    left: 0;
-    right: 0;
-    opacity: 1;
-} */
