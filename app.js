@@ -5,6 +5,7 @@ const express = require('express'),
     sanitizer = require("express-sanitizer"),
     bodyParser = require("body-parser"),
     passport = require('passport'),
+    flash = require('connect-flash'),
     LocalStrategy = require('passport-local'),
     User = require('./models/user'),
     WebData = require('./models/webSchema'),
@@ -28,15 +29,19 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(flash());
 
 const isLoggedIn = (req,res,next) => {
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash('message', 'Najpierw musisz się zalogować!');
     res.redirect('/login');
 }
+
 app.get('/login', (req, res) => {
-    res.render('pages/login');
+    // console.log(req.flash('message'));
+    res.render('pages/login', {message: req.flash('message')});
 });
 
 app.post('/login',passport.authenticate("local", {

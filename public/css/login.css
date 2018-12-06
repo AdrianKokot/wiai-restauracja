@@ -70,11 +70,11 @@ input,
 
 #submit:hover,
 #submit:focus {
-    color: var(--backgroundDefaultColor);
+    color: var(--formSubmitActiveColor);
     border-color: var(--formSubmitActiveColor);
 }
 
-#submit::before {
+/* #submit::before {
     transition: 0.5s all ease;
     position: absolute;
     top: 0;
@@ -92,4 +92,4 @@ input,
     left: 0;
     right: 0;
     opacity: 1;
-}
+} */
